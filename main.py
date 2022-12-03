@@ -24,6 +24,9 @@ snake_food.goto(0, 200)
 
 snake_body = []
 
+snake_colors = ["purple", "blue", "yellow", "green", "orange"]
+snake_color_index = 0
+
 def up():
     if snake_head.heading != 270:
         snake_head.heading = 90
@@ -69,6 +72,8 @@ while True:
     screen.update()
     if snake_head.xcor() > 250 or snake_head.xcor() < - 250 or snake_head.ycor() > 250 or snake_head.ycor() < -250:
         time.sleep(3)
+        score = 0
+        screen.title("SCORE IS: 0")
         snake_head.goto(0, 0)
         snake_head.heading = 0
 
@@ -85,7 +90,11 @@ while True:
         new_snake_part = turtle.Turtle()
         new_snake_part.speed(0)
         new_snake_part.shape("square")
-        new_snake_part.color("purple")
+        new_snake_part.color(snake_colors[snake_color_index])
+        snake_color_index = snake_color_index + 1
+        if snake_color_index == len(snake_colors):
+            snake_color_index = 0
+
         new_snake_part.penup()
         snake_body.append(new_snake_part)
 
@@ -98,5 +107,17 @@ while True:
         y = snake_head.ycor()
         snake_body[0].goto(x, y)
     snake_move()
+
+    for snake_part in snake_body:
+        if snake_part.distance(snake_head) < 10:
+            time.sleep(3)
+            snake_head.goto(0, 0)
+            score = 0
+            screen.title("SCORE IS: 0")
+
+            for snake_part2 in snake_body:
+                snake_part2.goto(1000, 1000)
+            snake_body.clear()
     time.sleep(0.1)
+screen.mainloop()
 screen.mainloop()
