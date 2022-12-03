@@ -79,7 +79,7 @@ while True:
 
         for snake_part in snake_body:
             snake_part.goto(1000, 1000)
-            snake_body.clear()
+        snake_body.clear()
     if snake_head.distance(snake_food) < 10:
         score = score + 10
         screen.title("SCORE IS: " + str(score))
